@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #af8484;
+    background-color: #e9dcdc;
+}
+
+nav {
+    background-color: rgb(99, 88, 88);
+    padding: 1px;
+    position: sticky;
+    box-shadow: 0 2px 10px rgb(192, 129, 129);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+}
+
+.logo {
+
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    margin: 2px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    transition: all 0.3s;
+    padding: 1px 1.5px;
+    border-radius: 5px;
+}
+
+.nav-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.nav-links a.active {
+    background: rgba(255, 255, 255, 0.3);
+}
+/* About Page */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10px;
+    align-items: center;
+    margin: 20px;
+    
+}
+.about-text {
+    width: 700px;
+    background-color: #cab6b6;
+    margin-top: 120px;
+    border-radius: 10px;
+    margin-left: 50px;
+    border-bottom-left-radius: 100px;
+}
+.about-text h1 {
+    color: #555;
+    font-size: 40px;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    padding: 30px;
+
+}
+
+.about-text p {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #070606;
+    padding: 30px;
+}
+
+.about-features {
+    background: #f8f9fa;
+    padding: 3px;
+    border-radius: 15px;
+    width: 700px;
+    height: 500px;
+}
+.about-head {
+    padding: 5px;
+    text-align: center;
+    margin-top: 5px;
+}
+.about-head h2 {
+    color: brown;
+    font-size: 30px;
+}
+.about-head p {
+    font-size: 20px;
+    color: #070606;
+}
+.feature {
+    display: block;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    
+}
+
+.feature i {
+    font-size: 20px;
+    color:#555;
+    padding: 15px;
+}
