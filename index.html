@@ -1,0 +1,863 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopList - Your Smart Shopping Companion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== RESET & BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ========== NAVIGATION STYLES ========== */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* ========== PAGE CONTAINER STYLES ========== */
+        .page {
+            display: none;
+            min-height: calc(100vh - 200px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* ========== HOME PAGE STYLES ========== */
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== ABOUT PAGE STYLES ========== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .about-features {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature i {
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        /* ========== PRODUCTS PAGE STYLES ========== */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-card i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .product-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* ========== CUSTOMERS PAGE STYLES ========== */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .testimonial .customer-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial .avatar {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(4, 1, 1);
+            font-size: 1.5rem;
+        }
+
+        .testimonial .stars {
+            color: #ffd700;
+        }
+
+        /* ========== CONTACT PAGE STYLES ========== */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-item i {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-top: 0.3rem;
+        }
+
+        /* ========== SHOP PAGE STYLES ========== */
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .shopping-list {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .list-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .list-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .list-items {
+            list-style: none;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .list-item:hover {
+            background: #e9ecef;
+        }
+
+        .list-item.completed {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .item-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .item-actions button:hover {
+            transform: scale(1.2);
+        }
+
+        .item-actions .complete {
+            color: #28a745;
+        }
+
+        .item-actions .delete {
+            color: #dc3545;
+        }
+
+        /* ========== FOOTER STYLES ========== */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* ========== RESPONSIVE STYLES ========== */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .nav-links span {
+                display: none;
+            }
+
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========================================
+         NAVIGATION SECTION
+    ========================================= -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-shopping-basket"></i>
+                ShopList
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active" onclick="navigateTo('home')">
+                    <i class="fas fa-home"></i><span>Home</span>
+                </a></li>
+                <li><a href="#about" class="nav-link" onclick="navigateTo('about')">
+                    <i class="fas fa-info-circle"></i><span>About</span>
+                </a></li>
+                <li><a href="#products" class="nav-link" onclick="navigateTo('products')">
+                    <i class="fas fa-box"></i><span>Products</span>
+                </a></li>
+                <li><a href="#customers" class="nav-link" onclick="navigateTo('customers')">
+                    <i class="fas fa-users"></i><span>Customers</span>
+                </a></li>
+                <li><a href="#contact" class="nav-link" onclick="navigateTo('contact')">
+                    <i class="fas fa-envelope"></i><span>Contact</span>
+                </a></li>
+                <li><a href="#shop" class="nav-link" onclick="navigateTo('shop')">
+                    <i class="fas fa-cart-shopping"></i><span>Shop</span>
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ========================================
+         HOME PAGE
+    ========================================= -->
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="hero">
+                <h1>Welcome to ShopList</h1>
+                <p>Your ultimate shopping companion for organized and stress-free shopping</p>
+                <button class="btn" onclick="navigateTo('shop')">Start Shopping Now</button>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <i class="fas fa-list-check"></i>
+                    <h3>Smart Lists</h3>
+                    <p>Create and manage multiple shopping lists with ease</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-mobile-screen"></i>
+                    <h3>Mobile Ready</h3>
+                    <p>Access your lists anywhere, anytime on any device</p>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-share-nodes"></i>
+                    <h3>Share & Collaborate</h3>
+                    <p>Share lists with family and friends for group shopping</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         ABOUT PAGE
+    ========================================= -->
+    <div id="about" class="page">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About ShopList</h2>
+                    <p>ShopList is your trusted companion for organized shopping. We help thousands of shoppers save time, reduce stress, and never forget an item again.</p>
+                    <p>Founded in 2024, our mission is to make shopping simple, efficient, and enjoyable for everyone. Whether you're planning your weekly grocery run or preparing for a special occasion, ShopList has you covered.</p>
+                    <p>Join our community of smart shoppers today and experience the difference!</p>
+                </div>
+                <div class="about-features">
+                    <div class="feature">
+                        <i class="fas fa-rocket"></i>
+                        <div>
+                            <h3>Fast & Efficient</h3>
+                            <p>Quickly create and manage your shopping lists</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-halved"></i>
+                        <div>
+                            <h3>Secure & Private</h3>
+                            <p>Your data is safe and protected with us</p>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-heart"></i>
+                        <div>
+                            <h3>User Friendly</h3>
+                            <p>Simple interface that anyone can use</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         PRODUCTS PAGE
+    ========================================= -->
+    <div id="products" class="page">
+        <div class="container">
+            <h2 style="text-align: center; color: #667eea; font-size: 2.5rem; margin-bottom: 2rem;">Our Products</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <i class="fas fa-carrot"></i>
+                    <h3>Fresh Produce</h3>
+                    <p>Farm-fresh fruits and vegetables delivered to your door</p>
+                    <div class="price">$15.99</div>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-bread-slice"></i>
+                    <h3>Bakery Items</h3>
+                    <p>Freshly baked bread, pastries, and desserts</p>
+                    <div class="price">$8.99</div>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <h3>Meat & Poultry</h3>
+                    <p>Premium quality meat and poultry products</p>
+                    <div class="price">$22.99</div>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-fish"></i>
+                    <h3>Seafood</h3>
+                    <p>Fresh seafood caught daily from local waters</p>
+                    <div class="price">$28.99</div>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-cheese"></i>
+                    <h3>Dairy Products</h3>
+                    <p>Milk, cheese, yogurt, and other dairy essentials</p>
+                    <div class="price">$12.99</div>
+                </div>
+                <div class="product-card">
+                    <i class="fas fa-bottle-water"></i>
+                    <h3>Beverages</h3>
+                    <p>Wide selection of drinks and refreshments</p>
+                    <div class="price">$6.99</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         CUSTOMERS PAGE
+    ========================================= -->
+    <div id="customers" class="page">
+        <div class="container">
+            <h2 style="text-align: center; color: #667eea; font-size: 2.5rem; margin-bottom: 2rem;">What Our Customers Say</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">JD</div>
+                        <div>
+                            <h4>John Doe</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"ShopList has completely transformed how I shop! I never forget anything anymore and shopping is so much faster. Highly recommend!"</p>
+                </div>
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">SM</div>
+                        <div>
+                            <h4>Sarah Miller</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"The ability to share lists with my family is a game-changer. We coordinate our shopping so much better now. Love this app!"</p>
+                </div>
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">RJ</div>
+                        <div>
+                            <h4>Robert Johnson</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"Simple, efficient, and exactly what I needed. The interface is clean and easy to use. Best shopping list app out there!"</p>
+                </div>
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">EB</div>
+                        <div>
+                            <h4>Emily Brown</h4>
+                            <div class="stars">★★★★☆</div>
+                        </div>
+                    </div>
+                    <p>"Great app with lots of useful features. It's helped me stay organized and save money by planning my shopping better."</p>
+                </div>
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">MW</div>
+                        <div>
+                            <h4>Michael Wilson</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"I've tried many shopping list apps, but ShopList is by far the best. It's reliable, fast, and has all the features I need."</p>
+                </div>
+                <div class="testimonial">
+                    <div class="customer-info">
+                        <div class="avatar">LT</div>
+                        <div>
+                            <h4>Lisa Taylor</h4>
+                            <div class="stars">★★★★★</div>
+                        </div>
+                    </div>
+                    <p>"As a busy mom, this app has been a lifesaver. I can quickly add items throughout the week and have everything ready for shopping day."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         CONTACT PAGE
+    ========================================= -->
+    <div id="contact" class="page">
+        <div class="container">
+            <h2 style="text-align: center; color: #667eea; font-size: 2.5rem; margin-bottom: 2rem;">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h3 style="margin-bottom: 1.5rem;">Send us a message</h3>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Send Message</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <h3 style="margin-bottom: 1.5rem;">Contact Information</h3>
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Shopping Street, Commerce City, CC 12345</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>support@shoplist.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>Business Hours</h4>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
+                               Saturday: 10:00 AM - 4:00 PM<br>
+                               Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         SHOP PAGE (Shopping List)
+    ========================================= -->
+    <div id="shop" class="page">
+        <div class="container">
+            <div class="shop-header">
+                <h2 style="color: #667eea; font-size: 2.5rem;">My Shopping List</h2>
+                <button class="btn" onclick="clearList()">
+                    <i class="fas fa-trash"></i> Clear All
+                </button>
+            </div>
+            <div class="shopping-list">
+                <div class="list-input">
+                    <input type="text" id="itemInput" placeholder="Add a new item...">
+                    <button class="btn" onclick="addItem()">
+                        <i class="fas fa-plus"></i> Add Item
+                    </button>
+                </div>
+                <ul class="list-items" id="listItems"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         FOOTER SECTION
+    ========================================= -->
+    <footer>
+        <p>&copy; 2025 ShopList. All rights reserved. | Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> for smart shoppers</p>
+    </footer>
+
+    <!-- ========================================
+         JAVASCRIPT SECTION
+    ========================================= -->
+    <script>
+        // Global array to store shopping list items
+        let shoppingItems = [];
+
+        /**
+         * Navigate between different pages
+         * @param {string} page - The ID of the page to navigate to
+         */
+        function navigateTo(page) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Remove active class from all pages and nav links
+            pages.forEach(p => p.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to selected page and nav link
+            document.getElementById(page).classList.add('active');
+            event.target.closest('.nav-link').classList.add('active');
+            
+            // Scroll to top of page
+            window.scrollTo(0, 0);
+        }
+
+        /**
+         * Add a new item to the shopping list
+         */
+        function addItem() {
+            const input = document.getElementById('itemInput');
+            const itemText = input.value.trim();
+            
+            // Don't add empty items
+            if (itemText === '') return;
+            
+            // Create new item object
+            const item = {
+                id: Date.now(),
+                text: itemText,
+                completed: false
+            };
+            
+            // Add item to array and render list
+            shoppingItems.push(item);
+            input.value = '';
+            renderList();
+        }
+
+        /**
+         * Toggle the completed status of an item
+         * @param {number} id - The ID of the item to toggle
+         */
+        function toggleComplete(id) {
+            const item = shoppingItems.find(item => item.id === id);
+            if (item) {
+                item.completed = !item.completed;
+                renderList();
+            }
+        }
+
+        /**
+         * Delete an item from the shopping list
+         * @param {number} id - The ID of the item to delete
+         */
+        function deleteItem(id) {
+            shoppingItems = shoppingItems.filter(item => item.id !== id);
+            renderList();
+        }
+
+        /**
+         * Clear all items from the shopping list
+         */
+        function clearList() {
+            if (shoppingItems.length === 0) return;
+            if (confirm('Are you sure you want to clear all items?')) {
+                shoppingItems = [];
+                renderList();
+            }
+        }
+
+        /**
+         * Render the shopping list to the DOM
+         */
+        function renderList() {
+            const listContainer = document.getElementById('listItems');
+            
+            // Show empty state if no items
+            if (shoppingItems.length === 0) {
+                listContainer.innerHTML = '<p style="text-align: center; color: #999; padding: 2rem;">Your shopping list is empty. Add some items to get started!</p>';
+                return;
+            }
+            
+            // Generate HTML for each item
+            listContainer.innerHTML = shoppingItems.map(item => `
+                <li class="list-item ${item.completed ? 'completed' : ''}">
+                    <span>${item.text}</span>
+                    <div class="item-actions">
+                        <button class="complete" onclick="toggleComplete(${item.id})" title="${item.completed ? 'Mark as incomplete' : 'Mark as complete'}">
+                            <i class="fas fa-${item.completed ? 'rotate-left' : 'check'}"></i>
+                        </button>
+                        <button class="delete" onclick="deleteItem(${item.id})" title="Delete item">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        /**
+         * Handle contact form submission
+         * @param {Event} event - The form submit event
+         */
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            event.target.reset();
+        }
+
+        // Add event listener for Enter key in shopping list input
+        document.getElementById('itemInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addItem();
+            }
+        });
+
+        // Initial render of shopping list
+        renderList();
+    </script>
+</body>
+</html>
+</body>
+</html>

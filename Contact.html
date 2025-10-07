@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../assets/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/Contacts.css" />
+    <title>Contacts Page</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-container">
+          <div class="logo">
+            <img
+              src="../assets/Images/WhatsApp Image 2024-07-20 at 15.37.09.jpeg"
+              alt=""
+            />
+          </div>
+          <i class="fas fa-cart-shopping">RA's Shopping Mall</i>
+
+          <ul class="nav-links">
+            <li>
+              <a
+                href="home.html"
+                class="nav-link active"
+                onclick="navigateTo('home')"
+              >
+                <i class="fas fa-home"></i><span>Home</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="about.html"
+                class="nav-link"
+                onclick="navigateTo('about')"
+              >
+                <i class="fas fa-info-circle"></i><span>About</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="products.html"
+                class="nav-link"
+                onclick="navigateTo('products')"
+              >
+                <i class="fas fa-box"></i><span>Products</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="customers.html"
+                class="nav-link"
+                onclick="navigateTo('customers')"
+              >
+                <i class="fas fa-users"></i><span>Customers</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="contact.html"
+                class="nav-link"
+                onclick="navigateTo('contact')"
+              >
+                <i class="fas fa-envelope"></i><span>Contact</span>
+              </a>
+            </li>
+            <li>
+              <a href="shop.html" class="nav-link" onclick="navigateTo('shop')">
+                <i class="fas fa-cart-shopping"></i><span>Shop</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!---============ Contacts Page =========-->
+    <div id="contact" class="page">
+      <div class="container">
+        <h2 style="
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;">Get In Touch</h2>
+        <div class="contact-content">
+          <div class="contact-form">
+            <h3 style="margin-bottom: 1.5rem">Send us a message</h3>
+            <form onsubmit="handleSubmit(event)">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" required />
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+          <div class="contact-info">
+            <h3 style="margin-bottom: 1.5rem">Contact Information</h3>
+            <div class="info-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <h4>Address</h4>
+                <p>123 Shopping Street, Commerce City, Lagos</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-phone"></i>
+              <div>
+                <h4>Phone</h4>
+                <p>+234 (813) 887-8845</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <h4>Email</h4>
+                <p>support@shoplist.com</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <h4>Business Hours</h4>
+                <p>
+                  Monday - Friday: 9:00 AM - 6:00 PM<br />
+                  Saturday: 10:00 AM - 4:00 PM<br />
+                  Sunday: Closed
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
